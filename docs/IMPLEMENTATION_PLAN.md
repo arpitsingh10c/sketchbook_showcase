@@ -32,11 +32,11 @@ Acceptance: no visible geometry swap between views; no hard jump during selectio
 
 ## Milestone 3 — physical page-turn prototype
 
-- [ ] Build a page mesh with multiple segments and double-sided texture support.
-- [ ] Add realistic bending/curl deformation around the spine and positive/negative turns.
-- [ ] Load only current, next and previous textures; manage ownership/disposal.
-- [ ] Show artwork on the right-hand page and intro page at start of book.
-- [ ] Add next/previous controls and end-of-book guards.
+- [x] Build a page mesh with multiple segments and double-sided texture support.
+- [x] Add realistic bending/curl deformation around the spine and positive/negative turns.
+- [x] Load only current, next and previous textures; manage ownership/disposal.
+- [x] Show artwork on the right-hand page and intro page at start of book.
+- [x] Add next/previous controls and end-of-book guards.
 
 Acceptance: paper curls rather than rigidly swinging; reverse page motion works; imagery doesn't mirror unexpectedly.
 

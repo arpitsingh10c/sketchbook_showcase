@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { BookTransitionConfig } from '../../animation/bookTransitions';
+import type { PageTurnConfig, PageTurnDirection } from '../../animation/pageAnimations';
 import type { AppMode, CatalogBook } from '../../content/types';
+import type { SketchbookPage } from '../book/pageTypes';
 import type { GalleryCameraConfig } from '../scene/galleryCamera';
 import { SketchbookScene } from '../scene/SketchbookScene';
 import { getGalleryLayout } from './galleryLayout';
@@ -14,7 +16,11 @@ interface GalleryProps {
   onSelect: (slug: string) => void;
   onCloseComplete: () => void;
   onOpenComplete: () => void;
-  pageTextureUrl?: string;
+  currentPageIndex: number;
+  onPageTurnComplete: () => void;
+  pages: SketchbookPage[];
+  pageTurnConfig?: PageTurnConfig;
+  pageTurnDirection: PageTurnDirection | null;
   cameraConfig?: GalleryCameraConfig;
   transitionConfig?: BookTransitionConfig;
 }
@@ -27,7 +33,11 @@ export function Gallery({
   onSelect,
   onCloseComplete,
   onOpenComplete,
-  pageTextureUrl,
+  currentPageIndex,
+  onPageTurnComplete,
+  pages,
+  pageTurnConfig,
+  pageTurnDirection,
   cameraConfig,
   transitionConfig,
 }: GalleryProps) {
@@ -59,12 +69,16 @@ export function Gallery({
           activeSlug={activeSlug}
           books={books}
           columns={columns}
+          currentPageIndex={currentPageIndex}
           hoveredId={hoveredId}
           mode={mode}
           narrow={narrow}
           onCloseComplete={onCloseComplete}
           onOpenComplete={onOpenComplete}
-          pageTextureUrl={pageTextureUrl}
+          onPageTurnComplete={onPageTurnComplete}
+          pages={pages}
+          pageTurnConfig={pageTurnConfig}
+          pageTurnDirection={pageTurnDirection}
           reducedMotion={reducedMotion}
           stageRef={stageRef}
           cameraConfig={cameraConfig}

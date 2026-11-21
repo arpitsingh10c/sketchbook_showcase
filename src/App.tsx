@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { getPageTurnPlan, type PageTurnDirection } from './animation/pageAnimations';
+import type { SketchbookPage } from './components/book/pageTypes';
 import { Gallery } from './components/gallery/Gallery';
 import { DescriptionPage } from './components/reader/DescriptionPage';
 import { ReaderControls } from './components/reader/ReaderControls';
@@ -17,7 +19,8 @@ export default function App() {
     finishOpening,
     beginClosing,
     finishClosing,
-    setPage,
+    beginPageTurn,
+    finishPageTurn,
     toggleDetails,
   } = useSketchbookStore();
 
@@ -56,6 +59,19 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
+  function turnPage(direction: PageTurnDirection) {
+    if (!activeBook || state.inputLocked) return;
+    const plan = getPageTurnPlan(activeBook.sketches.length, state.pageIndex, direction);
+    if (!plan) return;
+    beginPageTurn(direction, plan.targetPageIndex);
+  }
+
+  const pages = useMemo<SketchbookPage[]>(() => activeBook?.sketches.map((page) => ({
+    id: page.id,
+    frontImage: page.pageTextureImage,
+    backImage: page.thumbnailImage,
+  })) ?? [], [activeBook]);
+
   const sketch = activeBook?.sketches[state.pageIndex];
   const readerVisible = activeBook !== null
     && (state.mode === 'reading' || state.mode === 'showing-details' || state.mode === 'closing');
@@ -80,12 +96,15 @@ export default function App() {
           <Gallery
             activeSlug={state.activeSlug}
             books={books}
+            currentPageIndex={state.pageIndex}
             inputLocked={state.inputLocked}
             mode={state.mode}
             onSelect={openBook}
             onCloseComplete={completeClose}
             onOpenComplete={finishOpening}
-            pageTextureUrl={sketch?.pageTextureImage}
+            onPageTurnComplete={finishPageTurn}
+            pages={pages}
+            pageTurnDirection={state.pageTurnDirection}
           />
         )}
         {!loading && !error && books.length === 0 && <p>No published sketchbooks yet.</p>}
@@ -116,10 +135,11 @@ export default function App() {
                   onToggle={toggleDetails}
                 />
                 <ReaderControls
+                  locked={state.inputLocked}
                   pageIndex={state.pageIndex}
                   pageCount={activeBook.sketches.length}
-                  onPrevious={() => setPage(state.pageIndex - 1)}
-                  onNext={() => setPage(state.pageIndex + 1)}
+                  onPrevious={() => turnPage('backward')}
+                  onNext={() => turnPage('forward')}
                 />
               </aside>
             )}

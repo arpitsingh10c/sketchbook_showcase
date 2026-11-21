@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
+    "test:page-turns": "node scripts/run-page-turn-tests.mjs",
     "typecheck": "tsc --noEmit",
     "validate:content": "node scripts/validate-content.mjs",
     "optimize:images": "node scripts/optimize-images.mjs"
@@ -24,6 +25,7 @@
     "@types/react-dom": "^19.1.7",
     "@types/three": "^0.179.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "esbuild": "^0.28.2",
     "typescript": "~5.9.2",
     "vite": "^7.1.3"
   }

@@ -1,4 +1,5 @@
 import { useReducer } from 'react';
+import type { PageTurnDirection } from '../animation/pageAnimations';
 import type { AppMode } from '../content/types';
 
 interface SketchbookState {
@@ -6,6 +7,8 @@ interface SketchbookState {
   activeSlug: string | null;
   pageIndex: number;
   inputLocked: boolean;
+  pageTurnDirection: PageTurnDirection | null;
+  pendingPageIndex: number | null;
 }
 
 type Action =
@@ -13,7 +16,8 @@ type Action =
   | { type: 'FINISH_OPENING' }
   | { type: 'BEGIN_CLOSING' }
   | { type: 'FINISH_CLOSING' }
-  | { type: 'SET_PAGE'; pageIndex: number }
+  | { type: 'BEGIN_PAGE_TURN'; direction: PageTurnDirection; pageIndex: number }
+  | { type: 'FINISH_PAGE_TURN' }
   | { type: 'TOGGLE_DETAILS' };
 
 const initialState: SketchbookState = {
@@ -21,6 +25,8 @@ const initialState: SketchbookState = {
   activeSlug: null,
   pageIndex: 0,
   inputLocked: false,
+  pageTurnDirection: null,
+  pendingPageIndex: null,
 };
 
 function reducer(state: SketchbookState, action: Action): SketchbookState {
@@ -28,7 +34,14 @@ function reducer(state: SketchbookState, action: Action): SketchbookState {
     case 'BEGIN_OPENING':
       return state.inputLocked
         ? state
-        : { mode: 'opening', activeSlug: action.slug, pageIndex: 0, inputLocked: true };
+        : {
+          mode: 'opening',
+          activeSlug: action.slug,
+          pageIndex: 0,
+          inputLocked: true,
+          pageTurnDirection: null,
+          pendingPageIndex: null,
+        };
     case 'FINISH_OPENING':
       return { ...state, mode: 'reading', inputLocked: false };
     case 'BEGIN_CLOSING':
@@ -37,10 +50,27 @@ function reducer(state: SketchbookState, action: Action): SketchbookState {
         : { ...state, mode: 'closing', inputLocked: true };
     case 'FINISH_CLOSING':
       return initialState;
-    case 'SET_PAGE':
+    case 'BEGIN_PAGE_TURN':
       return state.inputLocked
         ? state
-        : { ...state, mode: 'reading', pageIndex: Math.max(0, action.pageIndex) };
+        : {
+          ...state,
+          mode: 'reading',
+          inputLocked: true,
+          pageTurnDirection: action.direction,
+          pendingPageIndex: Math.max(0, action.pageIndex),
+        };
+    case 'FINISH_PAGE_TURN':
+      return state.pendingPageIndex === null
+        ? { ...state, inputLocked: false, pageTurnDirection: null }
+        : {
+          ...state,
+          mode: 'reading',
+          pageIndex: state.pendingPageIndex,
+          inputLocked: false,
+          pageTurnDirection: null,
+          pendingPageIndex: null,
+        };
     case 'TOGGLE_DETAILS':
       return state.inputLocked
         ? state
@@ -56,7 +86,12 @@ export function useSketchbookStore() {
     finishOpening: () => dispatch({ type: 'FINISH_OPENING' }),
     beginClosing: () => dispatch({ type: 'BEGIN_CLOSING' }),
     finishClosing: () => dispatch({ type: 'FINISH_CLOSING' }),
-    setPage: (pageIndex: number) => dispatch({ type: 'SET_PAGE', pageIndex }),
+    beginPageTurn: (direction: PageTurnDirection, pageIndex: number) => dispatch({
+      type: 'BEGIN_PAGE_TURN',
+      direction,
+      pageIndex,
+    }),
+    finishPageTurn: () => dispatch({ type: 'FINISH_PAGE_TURN' }),
     toggleDetails: () => dispatch({ type: 'TOGGLE_DETAILS' }),
   };
 }

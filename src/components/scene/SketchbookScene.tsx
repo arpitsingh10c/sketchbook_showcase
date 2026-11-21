@@ -15,11 +15,13 @@ import {
   defaultBookTransition,
   type BookTransitionConfig,
 } from '../../animation/bookTransitions';
+import type { PageTurnConfig, PageTurnDirection } from '../../animation/pageAnimations';
 import type { AppMode, CatalogBook } from '../../content/types';
 import {
   GALLERY_BOOK_ROTATION,
 } from '../book/bookDimensions';
 import { Sketchbook3D, type Sketchbook3DHandle } from '../book/Sketchbook3D';
+import type { SketchbookPage } from '../book/pageTypes';
 import { getBookPosition } from '../gallery/galleryLayout';
 import { defaultGalleryCamera, type GalleryCameraConfig } from './galleryCamera';
 import { calculateReadingTransform } from './readingTransform';
@@ -35,7 +37,11 @@ interface SketchbookSceneProps {
   narrow: boolean;
   onCloseComplete: () => void;
   onOpenComplete: () => void;
-  pageTextureUrl?: string;
+  currentPageIndex: number;
+  onPageTurnComplete: () => void;
+  pages: SketchbookPage[];
+  pageTurnConfig?: PageTurnConfig;
+  pageTurnDirection: PageTurnDirection | null;
   reducedMotion: boolean;
   stageRef: RefObject<HTMLDivElement | null>;
   transitionConfig?: BookTransitionConfig;
@@ -275,7 +281,11 @@ export function SketchbookScene({
   narrow,
   onCloseComplete,
   onOpenComplete,
-  pageTextureUrl,
+  currentPageIndex,
+  onPageTurnComplete,
+  pages,
+  pageTurnConfig,
+  pageTurnDirection,
   reducedMotion,
   stageRef,
   transitionConfig = defaultBookTransition,
@@ -338,8 +348,12 @@ export function SketchbookScene({
                 else bookRefs.current.delete(book.slug);
               }}
               coverColor={book.coverColor}
+              currentPageIndex={activeSlug === book.slug ? currentPageIndex : 0}
               hovered={mode === 'gallery' && hoveredId === book.id}
-              pageTextureUrl={activeSlug === book.slug ? pageTextureUrl : undefined}
+              onPageTurnComplete={onPageTurnComplete}
+              pages={activeSlug === book.slug ? pages : []}
+              pageTurnConfig={pageTurnConfig}
+              pageTurnDirection={activeSlug === book.slug ? pageTurnDirection : null}
               reducedMotion={reducedMotion}
             />
           </group>

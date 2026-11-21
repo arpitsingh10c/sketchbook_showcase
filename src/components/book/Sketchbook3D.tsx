@@ -2,10 +2,12 @@ import { RoundedBox } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { MathUtils, type Group } from 'three';
+import type { PageTurnConfig, PageTurnDirection } from '../../animation/pageAnimations';
 import { BookCover } from './BookCover';
 import { BOOK_HEIGHT, BOOK_WIDTH, PAGE_HEIGHT, PAGE_WIDTH } from './bookDimensions';
 import { PageMesh } from './PageMesh';
-import { usePageTexture } from './usePageTexture';
+import { PageStack } from './PageStack';
+import type { SketchbookPage } from './pageTypes';
 
 export interface Sketchbook3DHandle {
   readonly root: Group | null;
@@ -15,19 +17,33 @@ export interface Sketchbook3DHandle {
 
 export interface Sketchbook3DProps {
   coverColor: string;
+  currentPageIndex?: number;
   hovered?: boolean;
-  pageTextureUrl?: string;
+  onPageTurnComplete?: () => void;
+  pages?: SketchbookPage[];
+  pageTurnConfig?: PageTurnConfig;
+  pageTurnDirection?: PageTurnDirection | null;
   reducedMotion?: boolean;
 }
 
+const ignorePageTurnCompletion = () => undefined;
+
 export const Sketchbook3D = forwardRef<Sketchbook3DHandle, Sketchbook3DProps>(function Sketchbook3D(
-  { coverColor, hovered = false, pageTextureUrl, reducedMotion = false },
+  {
+    coverColor,
+    currentPageIndex = 0,
+    hovered = false,
+    onPageTurnComplete = ignorePageTurnCompletion,
+    pages = [],
+    pageTurnConfig,
+    pageTurnDirection = null,
+    reducedMotion = false,
+  },
   forwardedRef,
 ) {
   const rootRef = useRef<Group>(null);
   const coverRef = useRef<Group>(null);
   const introPageRef = useRef<Group>(null);
-  const pageTexture = usePageTexture(pageTextureUrl);
 
   useImperativeHandle(forwardedRef, () => ({
     get root() { return rootRef.current; },
@@ -65,14 +81,16 @@ export const Sketchbook3D = forwardRef<Sketchbook3DHandle, Sketchbook3DProps>(fu
         <meshStandardMaterial color="#d4ccbd" roughness={1} />
       </mesh>
 
-      <PageMesh
-        width={PAGE_WIDTH}
-        height={PAGE_HEIGHT}
-        map={pageTexture}
-        position={[0.025, 0, 0.096]}
+      <PageStack
+        config={pageTurnConfig}
+        currentPageIndex={currentPageIndex}
+        direction={pageTurnDirection}
+        onTurnComplete={onPageTurnComplete}
+        pages={pages}
+        reducedMotion={reducedMotion}
       />
 
-      <group ref={introPageRef} position={[-BOOK_WIDTH / 2, 0, 0.122]}>
+      <group ref={introPageRef} position={[-BOOK_WIDTH / 2, 0, 0.126]}>
         <PageMesh width={PAGE_WIDTH} height={PAGE_HEIGHT} position={[BOOK_WIDTH / 2 + 0.025, 0, 0]} />
       </group>
 

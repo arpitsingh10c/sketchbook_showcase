@@ -13,6 +13,7 @@ Verification:
 
 ```bash
 npm run validate:content
+npm run test:page-turns
 npm run typecheck
 npm run build
 ```
@@ -64,4 +65,4 @@ The browser loads only the catalog initially. It fetches a sketchbook record and
 
 ## Current milestone
 
-Milestone 2 adds one reversible GSAP timeline that carries the selected gallery book into a focused reading composition without replacing its scene object. The book rises, approaches the fixed camera, rotates into the camera plane, opens its cover, turns a simple introductory sheet, and reveals the selected artwork texture. Other books and gallery HTML recede together, input stays locked during motion, and closing reverses the same timeline. Physically deformed paper remains a later milestone in `docs/IMPLEMENTATION_PLAN.md`.
+Milestone 3 adds CPU-deformed physical sheets to the existing reading composition. A detailed segmented page curls around the spine above the next visible page, supports distinct front/back images, and runs in either direction through one GSAP-driven progress value. Only current and adjacent textures stay resident, inactive pages remain the inexpensive paper block, navigation is locked during motion, and reduced-motion preferences are respected. See `docs/PHASE_3_PAGE_TURNS.md` for the page-order and deformation model.
