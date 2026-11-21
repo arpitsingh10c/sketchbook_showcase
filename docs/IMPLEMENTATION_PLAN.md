@@ -11,22 +11,22 @@
 
 ## Milestone 1 — shared book model and scene framing
 
-- [ ] Replace placeholder books with reusable `Sketchbook3D` component (spine, cover, paper block, hinged cover).
-- [ ] Keep 3D geometry independent from content records and layout.
-- [ ] Add configurable orthographic gallery camera, hover/focus affordance, soft shadows and lighting.
-- [ ] Preserve a single canvas for gallery/reading; test 1, 3 and 10 books.
-- [ ] Test that gallery labels remain HTML and align with objects across resize.
+- [x] Replace placeholder books with reusable `Sketchbook3D` component (spine, cover, paper block, hinged cover).
+- [x] Keep 3D geometry independent from content records and layout.
+- [x] Add configurable orthographic gallery camera, hover/focus affordance, soft shadows and lighting.
+- [x] Preserve a single canvas for gallery/reading; test 1, 3 and 10 books.
+- [x] Test that gallery labels remain HTML and align with objects across resize.
 
 Acceptance: books have tangible cover thickness, spine, shadows; no clipped objects or overlapping labels on common laptop/mobile sizes.
 
 ## Milestone 2 — continuous gallery → reading transition
 
-- [ ] Implement explicit states: `gallery`, `opening`, `reading`, `showing-details`, `closing`.
-- [ ] Track selected ID, current sketch index, previous gallery transform, and input lock.
-- [ ] GSAP sequence: labels slide away; book rises, rotates, approaches; cover starts to open before rise finishes; first page turns; reading view settles with subtle overshoot.
-- [ ] Keep the camera fixed initially; drive book transforms instead.
-- [ ] Right page is viewport focal point, left page normally offscreen.
-- [ ] Reverse choreography returns same book to its original gallery slot.
+- [x] Implement explicit states: `gallery`, `opening`, `reading`, `showing-details`, `closing`.
+- [x] Track selected ID, current sketch index, previous gallery transform, and input lock.
+- [x] GSAP sequence: labels slide away; book rises, rotates, approaches; cover starts to open before rise finishes; first page turns; reading view settles with subtle overshoot.
+- [x] Keep the camera fixed initially; drive book transforms instead.
+- [x] Right page is viewport focal point, left page normally offscreen.
+- [x] Reverse choreography returns same book to its original gallery slot.
 
 Acceptance: no visible geometry swap between views; no hard jump during selection or closing; repeated clicks cannot break state.
 

@@ -64,4 +64,4 @@ The browser loads only the catalog initially. It fetches a sketchbook record and
 
 ## Current milestone
 
-Milestone 1 provides a reusable 3D book with separate covers, spine, paper block, a hinged front-cover group, responsive orthographic framing, soft shadows, keyboard-accessible HTML labels, and a no-WebGL fallback. The accessible reader remains intentionally simple. Continuous gallery-to-reader choreography and physically deformed page turns belong to later milestones in `docs/IMPLEMENTATION_PLAN.md`.
+Milestone 2 adds one reversible GSAP timeline that carries the selected gallery book into a focused reading composition without replacing its scene object. The book rises, approaches the fixed camera, rotates into the camera plane, opens its cover, turns a simple introductory sheet, and reveals the selected artwork texture. Other books and gallery HTML recede together, input stays locked during motion, and closing reverses the same timeline. Physically deformed paper remains a later milestone in `docs/IMPLEMENTATION_PLAN.md`.

@@ -11,7 +11,15 @@ export default function App() {
   const [activeBook, setActiveBook] = useState<Sketchbook | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { state, beginOpening, finishOpening, showGallery, setPage, toggleDetails } = useSketchbookStore();
+  const {
+    state,
+    beginOpening,
+    finishOpening,
+    beginClosing,
+    finishClosing,
+    setPage,
+    toggleDetails,
+  } = useSketchbookStore();
 
   useEffect(() => {
     loadCatalog()
@@ -21,7 +29,7 @@ export default function App() {
   }, []);
 
   async function openBook(slug: string) {
-    if (state.inputLocked) return;
+    if (state.inputLocked || state.mode !== 'gallery') return;
     setError(null);
     setLoading(true);
     beginOpening(slug);
@@ -29,64 +37,79 @@ export default function App() {
     try {
       const book = await loadSketchbook(slug);
       setActiveBook(book);
-      finishOpening();
-      window.scrollTo({ top: 0, behavior: 'auto' });
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : 'Could not load sketchbook');
-      showGallery();
+      beginClosing();
     } finally {
       setLoading(false);
     }
   }
 
   function closeBook() {
-    showGallery();
+    if (state.inputLocked || state.mode === 'gallery') return;
+    beginClosing();
+  }
+
+  function completeClose() {
+    finishClosing();
     setActiveBook(null);
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
   const sketch = activeBook?.sketches[state.pageIndex];
-  const showingGallery = state.mode === 'gallery' || state.mode === 'opening' || activeBook === null;
+  const readerVisible = activeBook !== null
+    && (state.mode === 'reading' || state.mode === 'showing-details' || state.mode === 'closing');
 
   return (
-    <div className="app-shell">
+    <div className="app-shell" data-mode={state.mode}>
       <header className="site-header">
         <button className="wordmark" onClick={closeBook} aria-label="Return to all sketchbooks">
           SKETCHBOOK<span className="wordmark-dot">.</span>
         </button>
-        <span className="header-meta">AN ONGOING VISUAL ARCHIVE</span>
+        <span className="header-meta" data-gallery-ui>AN ONGOING VISUAL ARCHIVE</span>
       </header>
 
-      {showingGallery ? (
-        <main className="gallery-view">
-          <div className="intro-copy">
-            <p className="eyebrow">AN EXPLORATION IN PAPER &amp; PIXELS</p>
-            <h1>Ideas worth<br /><em>keeping.</em></h1>
-            <p>A collection of observations, fragments, and experiments. Choose a volume and look closer.</p>
-          </div>
+      <main className="experience-view" aria-busy={state.inputLocked}>
+        <div className="intro-copy" data-gallery-ui>
+          <p className="eyebrow">AN EXPLORATION IN PAPER &amp; PIXELS</p>
+          <h1>Ideas worth<br /><em>keeping.</em></h1>
+          <p>A collection of observations, fragments, and experiments. Choose a volume and look closer.</p>
+        </div>
 
-          {books.length > 0 && <Gallery books={books} onSelect={openBook} />}
-          {!loading && !error && books.length === 0 && <p>No published sketchbooks yet.</p>}
-        </main>
-      ) : (
-        <main className="reader-view">
-          <div className="reader-heading">
-            <button className="text-button" onClick={closeBook}>All sketchbooks</button>
-            <div>
-              <p className="eyebrow">{activeBook.title}</p>
-              <h1>{sketch?.title ?? 'This book is empty'}</h1>
-            </div>
-            <span className="page-number">
-              {sketch ? `${state.pageIndex + 1} / ${activeBook.sketches.length}` : '0 / 0'}
-            </span>
-          </div>
+        {books.length > 0 && (
+          <Gallery
+            activeSlug={state.activeSlug}
+            books={books}
+            inputLocked={state.inputLocked}
+            mode={state.mode}
+            onSelect={openBook}
+            onCloseComplete={completeClose}
+            onOpenComplete={finishOpening}
+            pageTextureUrl={sketch?.pageTextureImage}
+          />
+        )}
+        {!loading && !error && books.length === 0 && <p>No published sketchbooks yet.</p>}
 
-          {sketch && (
-            <div className="reader-layout">
-              <div className="paper-surface">
-                <img src={sketch.pageTextureImage} alt={sketch.title} />
+        {readerVisible && activeBook && (
+          <section
+            className={`reader-overlay${state.mode === 'closing' ? ' is-closing' : ''}`}
+            aria-label={`${activeBook.title} reader`}
+          >
+            <div className="reader-overlay-heading">
+              <button className="text-button reader-close" onClick={closeBook} disabled={state.inputLocked}>
+                All sketchbooks
+              </button>
+              <div aria-live="polite">
+                <p className="eyebrow">{activeBook.title}</p>
+                <h1>{sketch?.title ?? 'This book is empty'}</h1>
               </div>
-              <aside className="reader-info">
+              <span className="page-number">
+                {sketch ? `${state.pageIndex + 1} / ${activeBook.sketches.length}` : '0 / 0'}
+              </span>
+            </div>
+
+            {sketch && (
+              <aside className={`reader-overlay-panel${state.mode === 'showing-details' ? ' is-open' : ''}`}>
                 <DescriptionPage
                   sketch={sketch}
                   open={state.mode === 'showing-details'}
@@ -99,17 +122,14 @@ export default function App() {
                   onNext={() => setPage(state.pageIndex + 1)}
                 />
               </aside>
-            </div>
-          )}
-          <p className="prototype-disclaimer">
-            The physical gallery is milestone one. Continuous opening and deformable page turns follow in the next milestones.
-          </p>
-        </main>
-      )}
+            )}
+          </section>
+        )}
+      </main>
 
-      {loading && <div className="loading-notice" role="status">Loading sketchbooks…</div>}
+      {loading && <div className="loading-notice" role="status">Loading sketchbook…</div>}
       {error && <div className="error-notice" role="alert">{error}</div>}
-      <footer>MADE FOR CURIOSITY — AN EXPERIMENTAL SKETCHBOOK EXPERIENCE</footer>
+      <footer data-gallery-ui>MADE FOR CURIOSITY — AN EXPERIMENTAL SKETCHBOOK EXPERIENCE</footer>
     </div>
   );
 }

@@ -1,22 +1,42 @@
-import { useEffect, useState } from 'react';
-import type { CatalogBook } from '../../content/types';
+import { useEffect, useRef, useState } from 'react';
+import type { BookTransitionConfig } from '../../animation/bookTransitions';
+import type { AppMode, CatalogBook } from '../../content/types';
 import type { GalleryCameraConfig } from '../scene/galleryCamera';
 import { SketchbookScene } from '../scene/SketchbookScene';
 import { getGalleryLayout } from './galleryLayout';
 import { SketchbookLabel } from './SketchbookLabel';
 
 interface GalleryProps {
+  activeSlug: string | null;
   books: CatalogBook[];
+  inputLocked: boolean;
+  mode: AppMode;
   onSelect: (slug: string) => void;
+  onCloseComplete: () => void;
+  onOpenComplete: () => void;
+  pageTextureUrl?: string;
   cameraConfig?: GalleryCameraConfig;
+  transitionConfig?: BookTransitionConfig;
 }
 
-export function Gallery({ books, onSelect, cameraConfig }: GalleryProps) {
+export function Gallery({
+  activeSlug,
+  books,
+  inputLocked,
+  mode,
+  onSelect,
+  onCloseComplete,
+  onOpenComplete,
+  pageTextureUrl,
+  cameraConfig,
+  transitionConfig,
+}: GalleryProps) {
   const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.innerWidth < 700);
   const [reducedMotion, setReducedMotion] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -33,24 +53,34 @@ export function Gallery({ books, onSelect, cameraConfig }: GalleryProps) {
   const { columns, sceneHeight } = getGalleryLayout(books.length, narrow);
 
   return (
-    <section className="canvas-stage" style={{ height: sceneHeight }} aria-label="Sketchbook collection">
-      <SketchbookScene
-        books={books}
-        columns={columns}
-        hoveredId={hoveredId}
-        narrow={narrow}
-        reducedMotion={reducedMotion}
-        cameraConfig={cameraConfig}
-      />
-      <div className="gallery-caption-grid" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
-        {books.map((book) => (
-          <SketchbookLabel
-            key={book.id}
-            book={book}
-            onSelect={() => onSelect(book.slug)}
-            onHoverChange={(hovered) => setHoveredId(hovered ? book.id : null)}
-          />
-        ))}
+    <section className="canvas-stage-shell" style={{ height: sceneHeight }} aria-label="Sketchbook collection">
+      <div ref={stageRef} className="canvas-stage" style={{ height: sceneHeight }}>
+        <SketchbookScene
+          activeSlug={activeSlug}
+          books={books}
+          columns={columns}
+          hoveredId={hoveredId}
+          mode={mode}
+          narrow={narrow}
+          onCloseComplete={onCloseComplete}
+          onOpenComplete={onOpenComplete}
+          pageTextureUrl={pageTextureUrl}
+          reducedMotion={reducedMotion}
+          stageRef={stageRef}
+          cameraConfig={cameraConfig}
+          transitionConfig={transitionConfig}
+        />
+        <div className="gallery-caption-grid" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
+          {books.map((book) => (
+            <SketchbookLabel
+              key={book.id}
+              book={book}
+              disabled={inputLocked}
+              onSelect={() => onSelect(book.slug)}
+              onHoverChange={(hovered) => setHoveredId(hovered ? book.id : null)}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
