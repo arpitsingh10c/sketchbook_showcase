@@ -3,6 +3,8 @@ import { Component, useLayoutEffect, type ReactNode } from 'react';
 import { OrthographicCamera } from 'three';
 import type { CatalogBook } from '../../content/types';
 import { Sketchbook3D } from '../book/Sketchbook3D';
+import { getBookPosition } from '../gallery/galleryLayout';
+import { defaultGalleryCamera, type GalleryCameraConfig } from './galleryCamera';
 import { SceneLighting } from './SceneLighting';
 
 interface SketchbookSceneProps {
@@ -10,6 +12,8 @@ interface SketchbookSceneProps {
   columns: number;
   hoveredId: string | null;
   narrow: boolean;
+  reducedMotion: boolean;
+  cameraConfig?: GalleryCameraConfig;
 }
 
 interface SceneErrorBoundaryProps {
@@ -29,24 +33,32 @@ class SceneErrorBoundary extends Component<SceneErrorBoundaryProps, { failed: bo
   }
 }
 
-function CameraRig({ narrow }: { narrow: boolean }) {
+function CameraRig({ narrow, config }: { narrow: boolean; config: GalleryCameraConfig }) {
   const { camera, size } = useThree();
 
   useLayoutEffect(() => {
     if (!(camera instanceof OrthographicCamera)) return;
-    camera.position.set(0, narrow ? 3.8 : 4.7, 12);
-    camera.zoom = narrow ? Math.min(126, size.width * 0.34) : Math.min(120, size.width * 0.11);
+    const position = narrow ? config.mobilePosition : config.desktopPosition;
+    camera.position.set(...position);
+    camera.zoom = narrow
+      ? Math.min(config.maxMobileZoom, size.width * config.mobileZoomScale)
+      : Math.min(config.maxDesktopZoom, size.width * config.desktopZoomScale);
     camera.lookAt(0, 0, 0);
     camera.updateProjectionMatrix();
-  }, [camera, narrow, size.width]);
+  }, [camera, config, narrow, size.width]);
 
   return null;
 }
 
-export function SketchbookScene({ books, columns, hoveredId, narrow }: SketchbookSceneProps) {
+export function SketchbookScene({
+  books,
+  columns,
+  hoveredId,
+  narrow,
+  reducedMotion,
+  cameraConfig = defaultGalleryCamera,
+}: SketchbookSceneProps) {
   const rows = Math.ceil(books.length / columns);
-  const spacingX = 4.05;
-  const spacingY = 3.35;
 
   return (
     <SceneErrorBoundary
@@ -74,16 +86,17 @@ export function SketchbookScene({ books, columns, hoveredId, narrow }: Sketchboo
         gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
         dpr={[1, 1.5]}
       >
-        <CameraRig narrow={narrow} />
+        <CameraRig narrow={narrow} config={cameraConfig} />
         <SceneLighting />
         {books.map((book, index) => {
-          const column = index % columns;
-          const row = Math.floor(index / columns);
-          const x = (column - (columns - 1) / 2) * spacingX;
-          const y = ((rows - 1) / 2 - row) * spacingY;
+          const position = getBookPosition(index, rows, columns);
           return (
-            <group key={book.id} position={[x, y, 0]}>
-              <Sketchbook3D coverColor={book.coverColor} hovered={hoveredId === book.id} />
+            <group key={book.id} position={position}>
+              <Sketchbook3D
+                coverColor={book.coverColor}
+                hovered={hoveredId === book.id}
+                reducedMotion={reducedMotion}
+              />
             </group>
           );
         })}

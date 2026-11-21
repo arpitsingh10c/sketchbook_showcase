@@ -9,18 +9,25 @@ export interface Sketchbook3DProps {
   coverColor: string;
   hovered?: boolean;
   openingAngle?: number;
+  reducedMotion?: boolean;
 }
 
 const WIDTH = 1.62;
 const HEIGHT = 2.16;
 
-export function Sketchbook3D({ coverColor, hovered = false, openingAngle = 0 }: Sketchbook3DProps) {
+export function Sketchbook3D({
+  coverColor,
+  hovered = false,
+  openingAngle = 0,
+  reducedMotion = false,
+}: Sketchbook3DProps) {
   const bookRef = useRef<Group>(null);
 
   useFrame((_, delta) => {
     if (!bookRef.current) return;
-    bookRef.current.position.z = MathUtils.damp(bookRef.current.position.z, hovered ? 0.13 : 0, 7, delta);
-    bookRef.current.rotation.z = MathUtils.damp(bookRef.current.rotation.z, hovered ? -0.025 : 0, 7, delta);
+    const hoverEnabled = hovered && !reducedMotion;
+    bookRef.current.position.z = MathUtils.damp(bookRef.current.position.z, hoverEnabled ? 0.13 : 0, 7, delta);
+    bookRef.current.rotation.z = MathUtils.damp(bookRef.current.rotation.z, hoverEnabled ? -0.025 : 0, 7, delta);
   });
 
   return (

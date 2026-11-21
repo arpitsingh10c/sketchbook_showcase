@@ -17,7 +17,7 @@ export function SketchbookLabel({ book, onSelect, onHoverChange }: SketchbookLab
       onBlur={() => onHoverChange(false)}
       aria-label={`Open ${book.title}`}
     >
-      <span className="book-hit-area" aria-hidden="true"><span>OPEN BOOK ↗</span></span>
+      <span className="book-hit-area" aria-hidden="true"><span>VIEW SKETCHBOOK</span></span>
       <span className="caption-count">COLLECTION · {book.sketchCount} SKETCHES</span>
       <strong>{book.title}</strong>
       <span>{book.description}</span>

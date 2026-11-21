@@ -71,7 +71,7 @@ export default function App() {
       ) : (
         <main className="reader-view">
           <div className="reader-heading">
-            <button className="text-button" onClick={closeBook}>← All sketchbooks</button>
+            <button className="text-button" onClick={closeBook}>All sketchbooks</button>
             <div>
               <p className="eyebrow">{activeBook.title}</p>
               <h1>{sketch?.title ?? 'This book is empty'}</h1>

@@ -52,7 +52,7 @@ h1 em { font-family: 'Playfair Display', Georgia, serif; font-weight: 500; }
   text-align: center;
 }
 .gallery-caption strong { font-size: clamp(18px, 2.1vw, 29px); font-weight: 500; letter-spacing: -.04em; }
-.gallery-caption > span:last-child { max-width: 290px; color: #77746e; font-size: 12px; line-height: 1.4; }
+.gallery-caption > span:last-child { max-width: 290px; color: #77746e; font-size: 14px; line-height: 1.5; }
 .book-hit-area {
   position: absolute;
   top: 7%;
@@ -68,7 +68,7 @@ h1 em { font-family: 'Playfair Display', Georgia, serif; font-weight: 500; }
   background: transparent;
   transition: color .2s ease, background .2s ease, border-color .2s ease;
 }
-.book-hit-area span { font-size: 10px; letter-spacing: .1em; }
+.book-hit-area span { font-size: 12px; font-weight: 700; letter-spacing: .1em; }
 .gallery-caption:hover .book-hit-area,
 .gallery-caption:focus-visible .book-hit-area { border-color: rgba(255,255,255,.44); color: white; background: rgba(20,20,20,.25); }
 
