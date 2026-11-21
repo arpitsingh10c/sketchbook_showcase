@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "books": [
+    {
+      "id": "book-001",
+      "slug": "studies-in-motion",
+      "title": "Studies in Motion",
+      "description": "Gesture, movement, and the unfinished line.",
+      "coverColor": "#52634f",
+      "createdAt": "2026-01-10",
+      "displayOrder": 1,
+      "status": "published",
+      "sketchCount": 2
+    },
+    {
+      "id": "book-002",
+      "slug": "quiet-objects",
+      "title": "Quiet Objects",
+      "description": "Small observations of everyday things.",
+      "coverColor": "#a16b53",
+      "createdAt": "2026-02-02",
+      "displayOrder": 2,
+      "status": "published",
+      "sketchCount": 2
+    },
+    {
+      "id": "book-003",
+      "slug": "places-and-memory",
+      "title": "Places & Memory",
+      "description": "Architecture and remembered spaces.",
+      "coverColor": "#697b87",
+      "createdAt": "2026-03-17",
+      "displayOrder": 3,
+      "status": "published",
+      "sketchCount": 2
+    }
+  ]
+}

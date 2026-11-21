@@ -1,0 +1,45 @@
+{
+  "id": "book-001",
+  "slug": "studies-in-motion",
+  "title": "Studies in Motion",
+  "description": "Gesture, movement, and the unfinished line.",
+  "coverColor": "#52634f",
+  "createdAt": "2026-01-10",
+  "displayOrder": 1,
+  "status": "published",
+  "sketchCount": 2,
+  "sketches": [
+    {
+      "id": "book-001-sketch-01",
+      "sketchbookId": "book-001",
+      "title": "Gesture No. 01",
+      "description": "Loose lines following an imagined figure. This is placeholder content; replace it with original artwork and writing.",
+      "artworkImage": "/artwork/studies-in-motion/gesture-01.svg",
+      "thumbnailImage": "/artwork/studies-in-motion/gesture-01.svg",
+      "pageTextureImage": "/artwork/studies-in-motion/gesture-01.svg",
+      "originalImage": "/artwork/studies-in-motion/gesture-01.svg",
+      "createdAt": "2026-01-10",
+      "displayOrder": 1,
+      "tags": [
+        "sample"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "book-001-sketch-02",
+      "sketchbookId": "book-001",
+      "title": "Gesture No. 02",
+      "description": "A study of overlapping movement and imperfect contours. This is placeholder content; replace it with original artwork and writing.",
+      "artworkImage": "/artwork/studies-in-motion/gesture-02.svg",
+      "thumbnailImage": "/artwork/studies-in-motion/gesture-02.svg",
+      "pageTextureImage": "/artwork/studies-in-motion/gesture-02.svg",
+      "originalImage": "/artwork/studies-in-motion/gesture-02.svg",
+      "createdAt": "2026-01-10",
+      "displayOrder": 2,
+      "tags": [
+        "sample"
+      ],
+      "status": "published"
+    }
+  ]
+}

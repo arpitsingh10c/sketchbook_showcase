@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;1,500&display=swap');
+
+:root { font-family: 'DM Sans', sans-serif; color: #252721; background: #f5f1e8; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible { outline: 3px solid #ac684b; outline-offset: 4px; }
+.app-shell { max-width: 1500px; margin: 0 auto; padding: 0 clamp(22px, 5vw, 88px); }
+.site-header { display: flex; align-items: center; justify-content: space-between; min-height: 100px; border-bottom: 1px solid #dcd7cb; gap: 16px; }
+.wordmark { border: 0; padding: 0; background: none; font-weight: 700; letter-spacing: -.05em; font-size: 23px; }
+.wordmark-dot { color: #aa6243; }
+.header-meta, .eyebrow, .caption-count, .page-number { font-size: 10px; letter-spacing: .18em; font-weight: 700; color: #837d71; }
+.intro-copy { max-width: 500px; padding: 90px 0 28px; }
+h1 { font-size: clamp(52px, 6.8vw, 98px); letter-spacing: -.065em; font-weight: 500; line-height: .98; margin: 20px 0; }
+h1 em { font-family: 'Playfair Display', Georgia, serif; font-weight: 500; }
+.intro-copy > p:last-child { max-width: 380px; color: #6c6a61; line-height: 1.65; }
+.canvas-stage { width: 100%; position: relative; margin: 20px 0 64px; }
+.gallery-caption-grid { position: absolute; inset: 0; display: grid; grid-auto-rows: 1fr; pointer-events: none; }
+.gallery-caption { pointer-events: auto; align-self: end; justify-self: center; border: 0; background: transparent; padding: 0 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: 280px; text-align: center; color: inherit; }
+.gallery-caption strong { font-size: clamp(18px, 2.1vw, 29px); font-weight: 500; letter-spacing: -.04em; }
+.gallery-caption > span:last-child { line-height: 1.4; font-size: 12px; color: #77746e; }
+.canvas-book-target { border: 1px solid #eee6d9; width: 124px; height: 164px; background: rgba(250,247,241,.04); color: transparent; display: grid; place-items: center; transition: background .2s, color .2s; }
+.canvas-book-target:hover, .canvas-book-target:focus-visible { background: rgba(20,20,20,.32); color: white; }
+.canvas-book-target span { font-size: 10px; letter-spacing: .1em; }
+.reader-view { min-height: 75vh; padding: 55px 0 32px; }
+.reader-heading { display: flex; align-items: start; justify-content: space-between; gap: 24px; }
+.reader-heading h1 { font-size: clamp(34px, 4.1vw, 62px); margin: 10px 0 28px; }
+.text-button { color: #5d554c; text-decoration: underline; text-underline-offset: 4px; border: none; background: none; padding: 8px 0; }
+.reader-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(220px, .75fr); gap: 34px; align-items: start; }
+.paper-surface { padding: clamp(16px, 4vw, 60px); background: #fcfaf3; box-shadow: 0 16px 45px #33312a1c; aspect-ratio: 4 / 4.3; display: grid; place-items: center; }
+.paper-surface img { width: 100%; max-height: 100%; object-fit: contain; }
+.reader-info { padding: 16px 0; border-top: 1px solid #cbc5b8; }
+.reader-info-heading, .reader-navigation { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.reader-info p { color: #6c6a61; line-height: 1.7; }
+.reader-navigation { margin-top: 36px; }
+.reader-navigation button { border: 1px solid #bdb5a8; padding: 13px 16px; color: #262822; background: transparent; }
+.reader-navigation button:disabled { opacity: .3; cursor: not-allowed; }
+.prototype-disclaimer { margin-top: 34px; font-size: 12px; color: #8d857b; }
+.loading-notice, .error-notice { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); padding: 16px 24px; z-index: 10; background: #262822; color: white; border-radius: 4px; }
+.error-notice { background: #9f453a; }
+footer { border-top: 1px solid #dcd7cb; text-align: center; padding: 32px; font-size: 10px; letter-spacing: .15em; color: #898175; }
+@media(max-width: 700px) {
+  .site-header { min-height: 76px; }
+  .header-meta { display: none; }
+  .intro-copy { padding-top: 55px; }
+  .reader-heading { flex-wrap: wrap; }
+  .reader-layout { grid-template-columns: 1fr; }
+  .gallery-caption { padding-bottom: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0ms !important; animation-duration: 0ms !important; } }

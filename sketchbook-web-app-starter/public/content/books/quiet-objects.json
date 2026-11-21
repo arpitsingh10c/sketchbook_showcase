@@ -1,0 +1,45 @@
+{
+  "id": "book-002",
+  "slug": "quiet-objects",
+  "title": "Quiet Objects",
+  "description": "Small observations of everyday things.",
+  "coverColor": "#a16b53",
+  "createdAt": "2026-02-02",
+  "displayOrder": 2,
+  "status": "published",
+  "sketchCount": 2,
+  "sketches": [
+    {
+      "id": "book-002-sketch-01",
+      "sketchbookId": "book-002",
+      "title": "The Vase",
+      "description": "A familiar vessel, seen again. This is placeholder content; replace it with original artwork and writing.",
+      "artworkImage": "/artwork/quiet-objects/vase.svg",
+      "thumbnailImage": "/artwork/quiet-objects/vase.svg",
+      "pageTextureImage": "/artwork/quiet-objects/vase.svg",
+      "originalImage": "/artwork/quiet-objects/vase.svg",
+      "createdAt": "2026-02-02",
+      "displayOrder": 1,
+      "tags": [
+        "sample"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "book-002-sketch-02",
+      "sketchbookId": "book-002",
+      "title": "Lamp Study",
+      "description": "A quiet experiment in geometry and light. This is placeholder content; replace it with original artwork and writing.",
+      "artworkImage": "/artwork/quiet-objects/lamp.svg",
+      "thumbnailImage": "/artwork/quiet-objects/lamp.svg",
+      "pageTextureImage": "/artwork/quiet-objects/lamp.svg",
+      "originalImage": "/artwork/quiet-objects/lamp.svg",
+      "createdAt": "2026-02-02",
+      "displayOrder": 2,
+      "tags": [
+        "sample"
+      ],
+      "status": "published"
+    }
+  ]
+}
