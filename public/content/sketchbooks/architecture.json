@@ -1,0 +1,42 @@
+{
+  "id": "book-architecture",
+  "slug": "architecture",
+  "title": "Architecture",
+  "description": "Thresholds, facades, and remembered spaces reduced to line.",
+  "coverImage": "/assets/sketchbooks/architecture/cover.webp",
+  "coverColor": "#657985",
+  "createdAt": "2026-02-02",
+  "displayOrder": 2,
+  "status": "published",
+  "sketchCount": 2,
+  "sketches": [
+    {
+      "id": "architecture-small-house",
+      "sketchbookId": "book-architecture",
+      "title": "Small House",
+      "description": "Remembering the shape of a place through roofline, threshold, and the dark square of a single window.",
+      "artworkImage": "/assets/sketchbooks/architecture/sketches/small-house/page.webp",
+      "thumbnailImage": "/assets/sketchbooks/architecture/sketches/small-house/thumbnail.webp",
+      "pageTextureImage": "/assets/sketchbooks/architecture/sketches/small-house/page.webp",
+      "originalImage": "/assets/sketchbooks/architecture/sketches/small-house/original.png",
+      "createdAt": "2026-02-02",
+      "displayOrder": 1,
+      "tags": ["house", "memory"],
+      "status": "published"
+    },
+    {
+      "id": "architecture-corridor",
+      "sketchbookId": "book-architecture",
+      "title": "Long Corridor",
+      "description": "A passage simplified to repetitions and distances, drawn from the point where every door looked the same.",
+      "artworkImage": "/assets/sketchbooks/architecture/sketches/corridor/page.webp",
+      "thumbnailImage": "/assets/sketchbooks/architecture/sketches/corridor/thumbnail.webp",
+      "pageTextureImage": "/assets/sketchbooks/architecture/sketches/corridor/page.webp",
+      "originalImage": "/assets/sketchbooks/architecture/sketches/corridor/original.png",
+      "createdAt": "2026-02-08",
+      "displayOrder": 2,
+      "tags": ["interior", "perspective"],
+      "status": "published"
+    }
+  ]
+}

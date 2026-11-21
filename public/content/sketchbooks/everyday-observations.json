@@ -1,0 +1,42 @@
+{
+  "id": "book-everyday-observations",
+  "slug": "everyday-observations",
+  "title": "Everyday Observations",
+  "description": "Small rituals, familiar corners, and the things we nearly overlook.",
+  "coverImage": "/assets/sketchbooks/everyday-observations/cover.webp",
+  "coverColor": "#9a654d",
+  "createdAt": "2026-01-10",
+  "displayOrder": 1,
+  "status": "published",
+  "sketchCount": 2,
+  "sketches": [
+    {
+      "id": "everyday-coffee-shop",
+      "sketchbookId": "book-everyday-observations",
+      "title": "Coffee Shop, 8:14 AM",
+      "description": "A quick study of the table before the room filled: one cup, a folded paper, and the long shadow of the window frame.",
+      "artworkImage": "/assets/sketchbooks/everyday-observations/sketches/coffee-shop/page.webp",
+      "thumbnailImage": "/assets/sketchbooks/everyday-observations/sketches/coffee-shop/thumbnail.webp",
+      "pageTextureImage": "/assets/sketchbooks/everyday-observations/sketches/coffee-shop/page.webp",
+      "originalImage": "/assets/sketchbooks/everyday-observations/sketches/coffee-shop/original.png",
+      "createdAt": "2026-01-10",
+      "displayOrder": 1,
+      "tags": ["interior", "observation"],
+      "status": "published"
+    },
+    {
+      "id": "everyday-desk-lamp",
+      "sketchbookId": "book-everyday-observations",
+      "title": "Desk Lamp",
+      "description": "An ordinary lamp becomes a stack of angles when the rest of the desk disappears into evening.",
+      "artworkImage": "/assets/sketchbooks/everyday-observations/sketches/desk-lamp/page.webp",
+      "thumbnailImage": "/assets/sketchbooks/everyday-observations/sketches/desk-lamp/thumbnail.webp",
+      "pageTextureImage": "/assets/sketchbooks/everyday-observations/sketches/desk-lamp/page.webp",
+      "originalImage": "/assets/sketchbooks/everyday-observations/sketches/desk-lamp/original.png",
+      "createdAt": "2026-01-14",
+      "displayOrder": 2,
+      "tags": ["object", "light"],
+      "status": "published"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "book-portraits",
+  "slug": "portraits",
+  "title": "Portraits",
+  "description": "Gesture, posture, and personality caught before the line settles.",
+  "coverImage": "/assets/sketchbooks/portraits/cover.webp",
+  "coverColor": "#53654f",
+  "createdAt": "2026-03-17",
+  "displayOrder": 3,
+  "status": "published",
+  "sketchCount": 2,
+  "sketches": [
+    {
+      "id": "portraits-gesture-one",
+      "sketchbookId": "book-portraits",
+      "title": "Gesture No. 01",
+      "description": "Loose lines following a figure before details could turn observation into certainty.",
+      "artworkImage": "/assets/sketchbooks/portraits/sketches/gesture-01/page.webp",
+      "thumbnailImage": "/assets/sketchbooks/portraits/sketches/gesture-01/thumbnail.webp",
+      "pageTextureImage": "/assets/sketchbooks/portraits/sketches/gesture-01/page.webp",
+      "originalImage": "/assets/sketchbooks/portraits/sketches/gesture-01/original.png",
+      "createdAt": "2026-03-17",
+      "displayOrder": 1,
+      "tags": ["figure", "gesture"],
+      "status": "published"
+    },
+    {
+      "id": "portraits-gesture-two",
+      "sketchbookId": "book-portraits",
+      "title": "Gesture No. 02",
+      "description": "Overlapping movement and imperfect contours, kept deliberately unresolved.",
+      "artworkImage": "/assets/sketchbooks/portraits/sketches/gesture-02/page.webp",
+      "thumbnailImage": "/assets/sketchbooks/portraits/sketches/gesture-02/thumbnail.webp",
+      "pageTextureImage": "/assets/sketchbooks/portraits/sketches/gesture-02/page.webp",
+      "originalImage": "/assets/sketchbooks/portraits/sketches/gesture-02/original.png",
+      "createdAt": "2026-03-21",
+      "displayOrder": 2,
+      "tags": ["figure", "gesture"],
+      "status": "published"
+    }
+  ]
+}

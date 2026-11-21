@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "books": [
+    {
+      "id": "book-everyday-observations",
+      "slug": "everyday-observations",
+      "title": "Everyday Observations",
+      "description": "Small rituals, familiar corners, and the things we nearly overlook.",
+      "coverImage": "/assets/sketchbooks/everyday-observations/cover.webp",
+      "coverColor": "#9a654d",
+      "createdAt": "2026-01-10",
+      "displayOrder": 1,
+      "status": "published",
+      "sketchCount": 2
+    },
+    {
+      "id": "book-architecture",
+      "slug": "architecture",
+      "title": "Architecture",
+      "description": "Thresholds, facades, and remembered spaces reduced to line.",
+      "coverImage": "/assets/sketchbooks/architecture/cover.webp",
+      "coverColor": "#657985",
+      "createdAt": "2026-02-02",
+      "displayOrder": 2,
+      "status": "published",
+      "sketchCount": 2
+    },
+    {
+      "id": "book-portraits",
+      "slug": "portraits",
+      "title": "Portraits",
+      "description": "Gesture, posture, and personality caught before the line settles.",
+      "coverImage": "/assets/sketchbooks/portraits/cover.webp",
+      "coverColor": "#53654f",
+      "createdAt": "2026-03-17",
+      "displayOrder": 3,
+      "status": "published",
+      "sketchCount": 2
+    }
+  ]
+}
